@@ -2,6 +2,8 @@ package entity
 
 import (
 	_ "embed"
+	"os"
+	"strconv"
 	"strings"
 	"sync"
 	"testing"
@@ -48,6 +50,14 @@ func TestCrawler(t *testing.T) {
 			}
 			tab.waitNetworkAlmostIdle(time.Second * 30)
 			logrus.Info(ii, " ", u)
+
+			picture, err := tab.FullScreenshot(85)
+			// 保存picture
+			if err != nil {
+				return err
+			}
+			logrus.Info(ii, " ", u)
+			os.WriteFile("./"+strconv.Itoa(ii)+".jpg", picture, 0644)
 
 			return nil
 		}()
